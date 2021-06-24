@@ -16,6 +16,9 @@
 		FD0F13102683EA6F00B419BE /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = FD0F130F2683EA6F00B419BE /* main.m */; };
 		FD0F131A2683EA6F00B419BE /* FlixTests.m in Sources */ = {isa = PBXBuildFile; fileRef = FD0F13192683EA6F00B419BE /* FlixTests.m */; };
 		FD0F13252683EA6F00B419BE /* FlixUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = FD0F13242683EA6F00B419BE /* FlixUITests.m */; };
+		FDFA0F3C2684406600BC8967 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = FDFA0F3B2684406600BC8967 /* .gitignore */; };
+		FDFA0F3E268440BD00BC8967 /* .gitattributes in Resources */ = {isa = PBXBuildFile; fileRef = FDFA0F3D268440BD00BC8967 /* .gitattributes */; };
+		FDFA0F402684411000BC8967 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = FDFA0F3F2684411000BC8967 /* README.md */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -54,6 +57,9 @@
 		FD0F13202683EA6F00B419BE /* FlixUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FlixUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		FD0F13242683EA6F00B419BE /* FlixUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FlixUITests.m; sourceTree = "<group>"; };
 		FD0F13262683EA6F00B419BE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FDFA0F3B2684406600BC8967 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		FDFA0F3D268440BD00BC8967 /* .gitattributes */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitattributes; sourceTree = SOURCE_ROOT; };
+		FDFA0F3F2684411000BC8967 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -84,6 +90,9 @@
 		FD0F12F12683EA6D00B419BE = {
 			isa = PBXGroup;
 			children = (
+				FDFA0F3B2684406600BC8967 /* .gitignore */,
+				FDFA0F3D268440BD00BC8967 /* .gitattributes */,
+				FDFA0F3F2684411000BC8967 /* README.md */,
 				FD0F12FC2683EA6D00B419BE /* Flix */,
 				FD0F13182683EA6F00B419BE /* FlixTests */,
 				FD0F13232683EA6F00B419BE /* FlixUITests */,
@@ -239,6 +248,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FDFA0F402684411000BC8967 /* README.md in Resources */,
+				FDFA0F3E268440BD00BC8967 /* .gitattributes in Resources */,
+				FDFA0F3C2684406600BC8967 /* .gitignore in Resources */,
 				FD0F130D2683EA6F00B419BE /* LaunchScreen.storyboard in Resources */,
 				FD0F130A2683EA6F00B419BE /* Assets.xcassets in Resources */,
 				FD0F13082683EA6E00B419BE /* Main.storyboard in Resources */,
