@@ -15,6 +15,7 @@
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic, strong) NSArray *movies;
 @property (nonatomic, strong) UIRefreshControl *refreshControl;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 
 @end
 
@@ -28,6 +29,8 @@
     
     // Do any additional setup after loading the view.
     
+    // Display loading state while fetching movies
+    [self.activityIndicator startAnimating];
     [self fetchMovies]; // setup network request
     
     // Add refresh control to table view
@@ -61,6 +64,7 @@
         }
         
         [self.refreshControl endRefreshing];
+        [self.activityIndicator stopAnimating];
        }];
     [task resume];
 }
