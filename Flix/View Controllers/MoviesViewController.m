@@ -6,6 +6,7 @@
 //
 
 #import "MoviesViewController.h"
+#import "MovieCell.h"
 
 @interface MoviesViewController () <UITableViewDataSource, UITableViewDelegate>
 
@@ -53,10 +54,13 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [[UITableViewCell alloc] init];
+    // Dequeue movie cell component
+    MovieCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MovieCell"];
     
+    // Update title and synposis labels with movie info
     NSDictionary *movie = self.movies[indexPath.row];
-    cell.textLabel.text = [NSString stringWithFormat:@"%@", movie[@"title"]];
+    cell.titleLabel.text = [NSString stringWithFormat:@"%@", movie[@"title"]];
+    cell.synopsisLabel.text = [NSString stringWithFormat:@"%@", movie[@"overview"]];
     
     return cell;
 }
