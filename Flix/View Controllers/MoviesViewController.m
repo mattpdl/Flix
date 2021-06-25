@@ -7,6 +7,7 @@
 
 #import "MoviesViewController.h"
 #import "MovieCell.h"
+#import "UIImageView+AFNetworking.h"
 
 @interface MoviesViewController () <UITableViewDataSource, UITableViewDelegate>
 
@@ -30,9 +31,12 @@
     NSURLRequest *request = [NSURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:10.0];
     NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration] delegate:nil delegateQueue:[NSOperationQueue mainQueue]];
     NSURLSessionDataTask *task = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+           // Unsuccessful request
            if (error != nil) {
                NSLog(@"%@", [error localizedDescription]);
            }
+           
+           // Successful request
            else {
                NSDictionary *dataDictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
                //NSLog(@"%@", dataDictionary);
@@ -61,6 +65,21 @@
     NSDictionary *movie = self.movies[indexPath.row];
     cell.titleLabel.text = [NSString stringWithFormat:@"%@", movie[@"title"]];
     cell.synopsisLabel.text = [NSString stringWithFormat:@"%@", movie[@"overview"]];
+    
+    if ([movie[@"poster_path"] isKindOfClass:[NSString class]]) {
+        // Get movie poster URL
+        NSString *baseURLString = @"https://image.tmdb.org/t/p/w500";
+        NSString *posterURLString = movie[@"poster_path"];
+        NSString *fullPosterURLString = [baseURLString stringByAppendingString:posterURLString];
+        NSURL *posterURL = [NSURL URLWithString:fullPosterURLString];
+        
+        // Update movie poster image view
+        cell.posterView.image = nil;
+        [cell.posterView setImageWithURL:posterURL];
+    }
+    else {
+        cell.posterView.image = nil; // No movie poster found
+    }
     
     return cell;
 }
