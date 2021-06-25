@@ -21,6 +21,7 @@
 		FD728118268559B8000301DE /* MoviesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD728117268559B8000301DE /* MoviesViewController.m */; };
 		FDC0DC252685BD3700CFFD39 /* MovieCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FDC0DC242685BD3700CFFD39 /* MovieCell.m */; };
 		FDC0DC272685C69600CFFD39 /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = FDC0DC262685C69600CFFD39 /* Podfile */; };
+		FDD471DD268643CC003D6836 /* DetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FDD471DC268643CC003D6836 /* DetailsViewController.m */; };
 		FDFA0F3C2684406600BC8967 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = FDFA0F3B2684406600BC8967 /* .gitignore */; };
 		FDFA0F3E268440BD00BC8967 /* .gitattributes in Resources */ = {isa = PBXBuildFile; fileRef = FDFA0F3D268440BD00BC8967 /* .gitattributes */; };
 		FDFA0F402684411000BC8967 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = FDFA0F3F2684411000BC8967 /* README.md */; };
@@ -74,6 +75,8 @@
 		FDC0DC232685BD3700CFFD39 /* MovieCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MovieCell.h; path = Flix/Views/MovieCell.h; sourceTree = SOURCE_ROOT; };
 		FDC0DC242685BD3700CFFD39 /* MovieCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = MovieCell.m; path = Flix/Views/MovieCell.m; sourceTree = SOURCE_ROOT; };
 		FDC0DC262685C69600CFFD39 /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; };
+		FDD471DB268643CC003D6836 /* DetailsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DetailsViewController.h; sourceTree = "<group>"; };
+		FDD471DC268643CC003D6836 /* DetailsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DetailsViewController.m; sourceTree = "<group>"; };
 		FDFA0F3B2684406600BC8967 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		FDFA0F3D268440BD00BC8967 /* .gitattributes */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitattributes; sourceTree = SOURCE_ROOT; };
 		FDFA0F3F2684411000BC8967 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
@@ -205,6 +208,8 @@
 		FD72811A268559D7000301DE /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				FDD471DB268643CC003D6836 /* DetailsViewController.h */,
+				FDD471DC268643CC003D6836 /* DetailsViewController.m */,
 				FD728116268559B8000301DE /* MoviesViewController.h */,
 				FD728117268559B8000301DE /* MoviesViewController.m */,
 			);
@@ -462,6 +467,7 @@
 				FD0F12FF2683EA6D00B419BE /* AppDelegate.m in Sources */,
 				FDC0DC252685BD3700CFFD39 /* MovieCell.m in Sources */,
 				FD728118268559B8000301DE /* MoviesViewController.m in Sources */,
+				FDD471DD268643CC003D6836 /* DetailsViewController.m in Sources */,
 				FD0F13102683EA6F00B419BE /* main.m in Sources */,
 				FD0F13022683EA6D00B419BE /* SceneDelegate.m in Sources */,
 			);
