@@ -13,6 +13,7 @@
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic, strong) NSArray *movies;
+@property (nonatomic, strong) UIRefreshControl *refreshControl;
 
 @end
 
@@ -26,29 +27,39 @@
     
     // Do any additional setup after loading the view.
     
-    // Setup network request
+    [self fetchMovies]; // setup network request
+    
+    // Add refresh control to table view
+    self.refreshControl = [[UIRefreshControl alloc] init];
+    [self.refreshControl addTarget:self action:@selector(fetchMovies) forControlEvents:UIControlEventValueChanged];
+    [self.tableView insertSubview:self.refreshControl atIndex:0];
+}
+
+- (void)fetchMovies {
     NSURL *url = [NSURL URLWithString:@"https://api.themoviedb.org/3/movie/now_playing?api_key=82066c445c715af844c04703a9f38b33"];
     NSURLRequest *request = [NSURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:10.0];
     NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration] delegate:nil delegateQueue:[NSOperationQueue mainQueue]];
     NSURLSessionDataTask *task = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-           // Unsuccessful request
-           if (error != nil) {
-               NSLog(@"%@", [error localizedDescription]);
-           }
+        // Unsuccessful request
+        if (error != nil) {
+           NSLog(@"%@", [error localizedDescription]);
+        }
            
-           // Successful request
-           else {
-               NSDictionary *dataDictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
-               //NSLog(@"%@", dataDictionary);
+        // Successful request
+        else {
+           NSDictionary *dataDictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
+           //NSLog(@"%@", dataDictionary);
 
-               // Get the array of movies and store the movies in a property to use elsewhere
-               self.movies = dataDictionary[@"results"];
-               for (NSDictionary *movie in self.movies)
-                   NSLog(@"%@", movie[@"title"]);
-               
-               // Reload table view data
-               [self.tableView reloadData];
-           }
+           // Get the array of movies and store the movies in a property to use elsewhere
+           self.movies = dataDictionary[@"results"];
+           for (NSDictionary *movie in self.movies)
+               NSLog(@"%@", movie[@"title"]);
+           
+           // Reload table view data
+           [self.tableView reloadData];
+        }
+        
+        [self.refreshControl endRefreshing];
        }];
     [task resume];
 }
