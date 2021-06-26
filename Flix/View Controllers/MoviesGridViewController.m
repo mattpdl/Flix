@@ -1,53 +1,30 @@
 //
-//  MoviesViewController.m
+//  MoviesGridViewController.m
 //  Flix
 //
-//  Created by mattpdl on 6/24/21.
+//  Created by mattpdl on 6/25/21.
 //
 
-#import "MoviesViewController.h"
-#import "MovieCell.h"
-#import "DetailsViewController.h"
+#import "MoviesGridViewController.h"
+#import "MovieGridCell.h"
 #import "UIImageView+AFNetworking.h"
 
-@interface MoviesViewController () <UITableViewDataSource, UITableViewDelegate>
+@interface MoviesGridViewController () <UICollectionViewDataSource, UICollectionViewDelegate>
 
-@property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic, strong) NSArray *movies;
-@property (nonatomic, strong) UIRefreshControl *refreshControl;
-@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
+@property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 
 @end
 
-@implementation MoviesViewController
+@implementation MoviesGridViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.tableView.dataSource = self;
-    self.tableView.delegate = self;
+    self.collectionView.dataSource = self;
+    self.collectionView.delegate = self;
     
-    // Do any additional setup after loading the view.
-    
-    // Display loading state while fetching movies
-    [self firstFetch];
-    
-    // Add refresh control to table view
-    self.refreshControl = [[UIRefreshControl alloc] init];
-    [self.refreshControl addTarget:self action:@selector(fetchMovies) forControlEvents:UIControlEventValueChanged];
-    [self.tableView insertSubview:self.refreshControl atIndex:0];
-}
-
-- (void)firstFetch {
-    [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone]; // hide separators between table cells
-    [self.activityIndicator startAnimating]; // display loading state
     [self fetchMovies];
-}
-
-- (void)endLoadingState {
-    [self.refreshControl endRefreshing];
-    [self.activityIndicator stopAnimating];
-    [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleSingleLine]; // readd separators if necessary
 }
 
 - (void)fetchMovies {
@@ -58,7 +35,7 @@
         // Unsuccessful request
         if (error != nil) {
             NSLog(@"%@", [error localizedDescription]);
-            [self endLoadingState];
+            /*[self endLoadingState];
             
             // Create network connection alert controller
             UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"No Network Connection"
@@ -74,7 +51,7 @@
             }];
             [alert addAction:retryAction];
             
-            [self presentViewController:alert animated:YES completion:^{}]; // display alert
+            [self presentViewController:alert animated:YES completion:^{}]; // display alert*/
         }
            
         // Successful request
@@ -84,29 +61,26 @@
 
             // Get the array of movies and store the movies in a property to use elsewhere
             self.movies = dataDictionary[@"results"];
-            /*for (NSDictionary *movie in self.movies)
-               NSLog(@"%@", movie[@"title"]);*/
-
-            // End loading state and reload table view data
-            [self endLoadingState];
-            [self.tableView reloadData];
+            [self.collectionView reloadData];
         }
        }];
     [task resume];
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return self.movies.count;
-}
+/*
+#pragma mark - Navigation
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Dequeue movie cell component
-    MovieCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MovieCell"];
-    
-    // Update title and synposis labels with movie info
-    NSDictionary *movie = self.movies[indexPath.row];
-    cell.titleLabel.text = [NSString stringWithFormat:@"%@", movie[@"title"]];
-    cell.synopsisLabel.text = [NSString stringWithFormat:@"%@", movie[@"overview"]];
+// In a storyboard-based application, you will often want to do a little preparation before navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    // Get the new view controller using [segue destinationViewController].
+    // Pass the selected object to the new view controller.
+}
+*/
+
+- (nonnull __kindof UICollectionViewCell *)collectionView:(nonnull UICollectionView *)collectionView cellForItemAtIndexPath:(nonnull NSIndexPath *)indexPath {
+    // Dequeue grid cell component for each movie
+    MovieGridCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"MovieGridCell" forIndexPath:indexPath];
+    NSDictionary *movie = self.movies[indexPath.row];\
     
     if ([movie[@"poster_path"] isKindOfClass:[NSString class]]) {
         // Get movie poster URL
@@ -126,18 +100,8 @@
     return cell;
 }
 
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-    UITableViewCell *tappedCell = sender;
-    NSIndexPath *indexPath = [self.tableView indexPathForCell:tappedCell];
-    NSDictionary *movie = self.movies[indexPath.row];
-    
-    DetailsViewController *detailsViewController = [segue destinationViewController];
-    detailsViewController.movie = movie;
+- (NSInteger)collectionView:(nonnull UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
+    return self.movies.count;
 }
 
 @end
