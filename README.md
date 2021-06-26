@@ -42,7 +42,7 @@ Please list two areas of the assignment you'd like to **discuss further with you
 
 Here's a walkthrough of implemented user stories:
 
-*coming soon*
+![Flix app running in iOS simulator](flix-demo.gif)
 
 GIF created with [EZGIF.COM](https://ezgif.com/video-to-gif).
 
