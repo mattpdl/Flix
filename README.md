@@ -50,6 +50,9 @@ GIF created with [EZGIF.COM](https://ezgif.com/video-to-gif).
 
 Describe any challenges encountered while building the app.
 
+I tried to implement loading indicators for each image as it loads, but I could not finish this in time despite making significant progress. I reverted such changes.
+Moreover, it took much longer than I expected to implement refresh, page loading indicators, and "no connection" alert functionality. This inhibited my ability to pursue stretch goals.
+
 ## Credits
 
 List an 3rd party libraries, icons, graphics, or other assets you used in your app.
