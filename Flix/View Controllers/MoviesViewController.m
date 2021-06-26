@@ -30,13 +30,24 @@
     // Do any additional setup after loading the view.
     
     // Display loading state while fetching movies
-    [self.activityIndicator startAnimating];
-    [self fetchMovies]; // setup network request
+    [self firstFetch];
     
     // Add refresh control to table view
     self.refreshControl = [[UIRefreshControl alloc] init];
     [self.refreshControl addTarget:self action:@selector(fetchMovies) forControlEvents:UIControlEventValueChanged];
     [self.tableView insertSubview:self.refreshControl atIndex:0];
+}
+
+- (void)firstFetch {
+    [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone]; // hide separators between table cells
+    [self.activityIndicator startAnimating]; // display loading state
+    [self fetchMovies];
+}
+
+- (void)endLoadingState {
+    [self.refreshControl endRefreshing];
+    [self.activityIndicator stopAnimating];
+    [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleSingleLine]; // readd separators if necessary
 }
 
 - (void)fetchMovies {
@@ -46,25 +57,40 @@
     NSURLSessionDataTask *task = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         // Unsuccessful request
         if (error != nil) {
-           NSLog(@"%@", [error localizedDescription]);
+            NSLog(@"%@", [error localizedDescription]);
+            [self endLoadingState];
+            
+            // Create network connection alert controller
+            UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"No Network Connection"
+                                                                                       message:@"Your device does not appear to have an internet connection. Movies info cannot be retrieved at this time."
+                                                                                preferredStyle:(UIAlertControllerStyleAlert)];
+            UIAlertAction *retryAction = [UIAlertAction actionWithTitle:@"Try Again"
+                                                               style:UIAlertActionStyleDefault
+                                                                handler:^(UIAlertAction * _Nonnull action) {
+                if (self.movies.count > 0)
+                    [self fetchMovies]; // refresh after connection lost
+                else
+                    [self firstFetch]; // retry after opening with no connection
+            }];
+            [alert addAction:retryAction];
+            
+            [self presentViewController:alert animated:YES completion:^{}]; // display alert
         }
            
         // Successful request
         else {
-           NSDictionary *dataDictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
-           //NSLog(@"%@", dataDictionary);
+            NSDictionary *dataDictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
+            //NSLog(@"%@", dataDictionary);
 
-           // Get the array of movies and store the movies in a property to use elsewhere
-           self.movies = dataDictionary[@"results"];
-           for (NSDictionary *movie in self.movies)
+            // Get the array of movies and store the movies in a property to use elsewhere
+            self.movies = dataDictionary[@"results"];
+            for (NSDictionary *movie in self.movies)
                NSLog(@"%@", movie[@"title"]);
-           
-           // Reload table view data
-           [self.tableView reloadData];
+
+            // End loading state and reload table view data
+            [self endLoadingState];
+            [self.tableView reloadData];
         }
-        
-        [self.refreshControl endRefreshing];
-        [self.activityIndicator stopAnimating];
        }];
     [task resume];
 }
