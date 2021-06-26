@@ -25,6 +25,18 @@
     self.collectionView.delegate = self;
     
     [self fetchMovies];
+    
+    // Configure collection view layout based on device size
+    UICollectionViewFlowLayout *layout = (UICollectionViewFlowLayout *) self.collectionView.collectionViewLayout;
+    
+    layout.minimumInteritemSpacing = 2;
+    layout.minimumLineSpacing = 2;
+    CGFloat postersPerRow = 3;
+    CGFloat availableWidth = self.collectionView.frame.size.width - layout.minimumInteritemSpacing * (postersPerRow - 1);
+    
+    CGFloat itemWidth = availableWidth / postersPerRow;
+    CGFloat itemHeight = 1.5 * itemWidth;
+    layout.itemSize = CGSizeMake(itemWidth, itemHeight);
 }
 
 - (void)fetchMovies {

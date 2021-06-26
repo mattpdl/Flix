@@ -27,11 +27,11 @@
             </objects>
             <point key="canvasLocation" x="591" y="-633"/>
         </scene>
-        <!--Item-->
+        <!--Box Office Mode-->
         <scene sceneID="wD4-nq-C7I">
             <objects>
                 <navigationController id="i88-7n-n3V" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="bp7-o7-NRg"/>
+                    <tabBarItem key="tabBarItem" title="Box Office Mode" image="ticket_tabbar_icon" id="bp7-o7-NRg"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="YSd-io-F1J">
                         <rect key="frame" x="0.0" y="44" width="390" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -113,7 +113,7 @@
             </objects>
             <point key="canvasLocation" x="137" y="839"/>
         </scene>
-        <!--Movies Grid View Controller-->
+        <!--Movies-->
         <scene sceneID="qIS-9q-ZFq">
             <objects>
                 <viewController id="5l1-JK-pOJ" customClass="MoviesGridViewController" sceneMemberID="viewController">
@@ -125,7 +125,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="ZdA-lV-ls4">
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="ZdA-lV-ls4">
                                     <size key="itemSize" width="130" height="195"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
@@ -141,7 +141,7 @@
                                             <subviews>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IeY-zg-yoH">
                                                     <rect key="frame" x="0.0" y="0.0" width="130" height="195"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 </imageView>
                                             </subviews>
                                         </collectionViewCellContentView>
@@ -156,7 +156,7 @@
                         <viewLayoutGuide key="safeArea" id="6LS-Zv-nLn"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
-                    <navigationItem key="navigationItem" id="Plx-fS-SXr"/>
+                    <navigationItem key="navigationItem" title="Movies" id="Plx-fS-SXr"/>
                     <connections>
                         <outlet property="collectionView" destination="CJ5-K0-Z3r" id="MT1-Ei-1FA"/>
                     </connections>
@@ -225,7 +225,7 @@
         <scene sceneID="2SA-Ei-ZmR">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="s6a-YB-dyr" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Now Playing" id="u1X-GA-qXS"/>
+                    <tabBarItem key="tabBarItem" title="Now Playing" image="now_playing_tabbar_item" id="u1X-GA-qXS"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="cfO-YG-Dnt">
                         <rect key="frame" x="0.0" y="44" width="390" height="44"/>
@@ -242,6 +242,8 @@
         </scene>
     </scenes>
     <resources>
+        <image name="now_playing_tabbar_item" width="21" height="21"/>
+        <image name="ticket_tabbar_icon" width="25" height="25"/>
         <systemColor name="secondarySystemBackgroundColor">
             <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
