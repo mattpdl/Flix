@@ -12,6 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface MovieGridCell : UICollectionViewCell
 
 @property (weak, nonatomic) IBOutlet UIImageView *posterView;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *posterIndicator;
 
 @end
 

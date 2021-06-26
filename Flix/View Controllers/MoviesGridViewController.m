@@ -7,12 +7,15 @@
 
 #import "MoviesGridViewController.h"
 #import "MovieGridCell.h"
+#import "DetailsViewController.h"
 #import "UIImageView+AFNetworking.h"
 
 @interface MoviesGridViewController () <UICollectionViewDataSource, UICollectionViewDelegate>
 
 @property (nonatomic, strong) NSArray *movies;
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
+@property (nonatomic, strong) UIRefreshControl *refreshControl;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 
 @end
 
@@ -24,7 +27,7 @@
     self.collectionView.dataSource = self;
     self.collectionView.delegate = self;
     
-    [self fetchMovies];
+    [self firstFetch];
     
     // Configure collection view layout based on device size
     UICollectionViewFlowLayout *layout = (UICollectionViewFlowLayout *) self.collectionView.collectionViewLayout;
@@ -37,6 +40,21 @@
     CGFloat itemWidth = availableWidth / postersPerRow;
     CGFloat itemHeight = 1.5 * itemWidth;
     layout.itemSize = CGSizeMake(itemWidth, itemHeight);
+    
+    // Add refresh control to table view
+    self.refreshControl = [[UIRefreshControl alloc] init];
+    [self.refreshControl addTarget:self action:@selector(fetchMovies) forControlEvents:UIControlEventValueChanged];
+    [self.collectionView insertSubview:self.refreshControl atIndex:0];
+}
+
+- (void)firstFetch {
+    [self.activityIndicator startAnimating]; // display loading state
+    [self fetchMovies];
+}
+
+- (void)endLoadingState {
+    [self.refreshControl endRefreshing];
+    [self.activityIndicator stopAnimating];
 }
 
 - (void)fetchMovies {
@@ -47,7 +65,7 @@
         // Unsuccessful request
         if (error != nil) {
             NSLog(@"%@", [error localizedDescription]);
-            /*[self endLoadingState];
+            [self endLoadingState];
             
             // Create network connection alert controller
             UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"No Network Connection"
@@ -63,7 +81,7 @@
             }];
             [alert addAction:retryAction];
             
-            [self presentViewController:alert animated:YES completion:^{}]; // display alert*/
+            [self presentViewController:alert animated:YES completion:^{}]; // display alert
         }
            
         // Successful request
@@ -73,6 +91,9 @@
 
             // Get the array of movies and store the movies in a property to use elsewhere
             self.movies = dataDictionary[@"results"];
+            
+            // End loading state and reload collection view
+            [self endLoadingState];
             [self.collectionView reloadData];
         }
        }];
@@ -92,7 +113,7 @@
 - (nonnull __kindof UICollectionViewCell *)collectionView:(nonnull UICollectionView *)collectionView cellForItemAtIndexPath:(nonnull NSIndexPath *)indexPath {
     // Dequeue grid cell component for each movie
     MovieGridCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"MovieGridCell" forIndexPath:indexPath];
-    NSDictionary *movie = self.movies[indexPath.row];\
+    NSDictionary *movie = self.movies[indexPath.row];
     
     if ([movie[@"poster_path"] isKindOfClass:[NSString class]]) {
         // Get movie poster URL

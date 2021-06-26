@@ -27,8 +27,6 @@
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
     
-    // Do any additional setup after loading the view.
-    
     // Display loading state while fetching movies
     [self firstFetch];
     
